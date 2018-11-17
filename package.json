@@ -30,10 +30,12 @@
     "watch": "tsc -w",
     "rebuild": "npm run clean && npm run build",
     "package": "vsce package",
-    "publish": "vsce publish"
+    "publish": "vsce publish",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "dependencies": {
     "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
     "vscode-test-adapter-api": "^1.0.1",
     "vscode-test-adapter-util": "^0.5.0"
   },
