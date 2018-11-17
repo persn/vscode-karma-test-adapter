@@ -1,7 +1,7 @@
 {
-  "name": "vscode-example-test-adapter",
-  "displayName": "Example Test Explorer",
-  "description": "Run your Example tests in the Sidebar of Visual Studio Code",
+  "name": "vscode-karma-test-adapter",
+  "displayName": "Karma Test Explorer",
+  "description": "Run your Karma tests in the Sidebar of Visual Studio Code",
   "icon": "img/icon.png",
   "author": "Holger Benl <hbenl@evandor.de>",
   "publisher": "hbenl",
