@@ -21,7 +21,7 @@ export class ExampleAdapter implements TestAdapter {
 
 	constructor(
 		public readonly workspace: vscode.WorkspaceFolder,
-		private readonly log: Log
+		private readonly log: Log,
 	) {
 
 		this.log.info('Initializing example adapter');
@@ -36,11 +36,11 @@ export class ExampleAdapter implements TestAdapter {
 
 		this.log.info('Loading example tests');
 
-		this.testsEmitter.fire(<TestLoadStartedEvent>{ type: 'started' });
+		this.testsEmitter.fire(<TestLoadStartedEvent> { type: 'started' });
 
 		const loadedTests = await loadFakeTests();
 
-		this.testsEmitter.fire(<TestLoadFinishedEvent>{ type: 'finished', suite: loadedTests });
+		this.testsEmitter.fire(<TestLoadFinishedEvent> { type: 'finished', suite: loadedTests });
 
 	}
 
@@ -48,24 +48,24 @@ export class ExampleAdapter implements TestAdapter {
 
 		this.log.info(`Running example tests ${JSON.stringify(tests)}`);
 
-		this.testStatesEmitter.fire(<TestRunStartedEvent>{ type: 'started', tests });
+		this.testStatesEmitter.fire(<TestRunStartedEvent> { type: 'started', tests });
 
 		// in a "real" TestAdapter this would start a test run in a child process
 		await runFakeTests(tests, this.testStatesEmitter);
 
-		this.testStatesEmitter.fire(<TestRunFinishedEvent>{ type: 'finished' });
+		this.testStatesEmitter.fire(<TestRunFinishedEvent> { type: 'finished' });
 
 	}
 
 	async debug(tests: string[]): Promise<void> {
 		// in a "real" TestAdapter this would start a test run in a child process and attach the debugger to it
 		this.log.warn('debug() not implemented yet');
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 
 	cancel(): void {
 		// in a "real" TestAdapter this would kill the child process for the current test run (if there is any)
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 
 	dispose(): void {

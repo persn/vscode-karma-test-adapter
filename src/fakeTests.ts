@@ -14,26 +14,26 @@ const fakeTestSuite: TestSuiteInfo = {
 				{
 					type: 'test',
 					id: 'test1',
-					label: 'Test #1'
+					label: 'Test #1',
 				},
 				{
 					type: 'test',
 					id: 'test2',
-					label: 'Test #2'
-				}
-			]
+					label: 'Test #2',
+				},
+			],
 		},
 		{
 			type: 'test',
 			id: 'test3',
-			label: 'Test #3'
+			label: 'Test #3',
 		},
 		{
 			type: 'test',
 			id: 'test4',
-			label: 'Test #4'
-		}
-	]
+			label: 'Test #4',
+		},
+	],
 };
 
 export function loadFakeTests(): Promise<TestSuiteInfo> {
@@ -42,7 +42,7 @@ export function loadFakeTests(): Promise<TestSuiteInfo> {
 
 export async function runFakeTests(
 	tests: string[],
-	testStatesEmitter: vscode.EventEmitter<TestRunStartedEvent | TestRunFinishedEvent | TestSuiteEvent | TestEvent>
+	testStatesEmitter: vscode.EventEmitter<TestRunStartedEvent | TestRunFinishedEvent | TestSuiteEvent | TestEvent>,
 ): Promise<void> {
 	for (const suiteOrTestId of tests) {
 		const node = findNode(fakeTestSuite, suiteOrTestId);
@@ -58,7 +58,7 @@ function findNode(searchNode: TestSuiteInfo | TestInfo, id: string): TestSuiteIn
 	} else if (searchNode.type === 'suite') {
 		for (const child of searchNode.children) {
 			const found = findNode(child, id);
-			if (found) return found;
+			if (found) { return found; }
 		}
 	}
 	return undefined;
@@ -66,24 +66,24 @@ function findNode(searchNode: TestSuiteInfo | TestInfo, id: string): TestSuiteIn
 
 async function runNode(
 	node: TestSuiteInfo | TestInfo,
-	testStatesEmitter: vscode.EventEmitter<TestRunStartedEvent | TestRunFinishedEvent | TestSuiteEvent | TestEvent>
+	testStatesEmitter: vscode.EventEmitter<TestRunStartedEvent | TestRunFinishedEvent | TestSuiteEvent | TestEvent>,
 ): Promise<void> {
 
 	if (node.type === 'suite') {
 
-		testStatesEmitter.fire(<TestSuiteEvent>{ type: 'suite', suite: node.id, state: 'running' });
+		testStatesEmitter.fire(<TestSuiteEvent> { type: 'suite', suite: node.id, state: 'running' });
 
 		for (const child of node.children) {
 			await runNode(child, testStatesEmitter);
 		}
 
-		testStatesEmitter.fire(<TestSuiteEvent>{ type: 'suite', suite: node.id, state: 'completed' });
+		testStatesEmitter.fire(<TestSuiteEvent> { type: 'suite', suite: node.id, state: 'completed' });
 
 	} else { // node.type === 'test'
 
-		testStatesEmitter.fire(<TestEvent>{ type: 'test', test: node.id, state: 'running' });
+		testStatesEmitter.fire(<TestEvent> { type: 'test', test: node.id, state: 'running' });
 
-		testStatesEmitter.fire(<TestEvent>{ type: 'test', test: node.id, state: 'passed' });
+		testStatesEmitter.fire(<TestEvent> { type: 'test', test: node.id, state: 'passed' });
 
 	}
 }

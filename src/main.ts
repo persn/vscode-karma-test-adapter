@@ -14,7 +14,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// get the Test Explorer extension
 	const testExplorerExtension = vscode.extensions.getExtension<TestHub>(testExplorerExtensionId);
-	if (log.enabled) log.info(`Test Explorer ${testExplorerExtension ? '' : 'not '}found`);
+	if (log.enabled) { log.info(`Test Explorer ${testExplorerExtension ? '' : 'not '}found`); }
 
 	if (testExplorerExtension) {
 
@@ -23,8 +23,8 @@ export async function activate(context: vscode.ExtensionContext) {
 		// this will register an ExampleTestAdapter for each WorkspaceFolder
 		context.subscriptions.push(new TestAdapterRegistrar(
 			testHub,
-			workspaceFolder => new ExampleAdapter(workspaceFolder, log),
-			log
+			(w) => new ExampleAdapter(w, log),
+			log,
 		));
 	}
 }
